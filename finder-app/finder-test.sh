@@ -25,7 +25,8 @@ else
 	WRITEDIR=/tmp/aeld-data/$3
 fi
 
-MATCHSTR="The number of files are ${NUMFILES} and the number of matching lines are ${NUMFILES}"
+MATCHSTR="we have found ${NUMFILES} files and ${NUMFILES} matching linese"
+#MATCHSTR="The number of files are ${NUMFILES} and the number of matching lines are ${NUMFILES}"
 
 echo "Writing ${NUMFILES} files containing string ${WRITESTR} to ${WRITEDIR}"
 
@@ -55,14 +56,17 @@ fi
 for i in $( seq 1 $NUMFILES)
 do
 	./writer.sh "$WRITEDIR/${username}$i.txt" "$WRITESTR"
+	echo "file number $i has been creted successfully in $WRITEDIR containing $WRITESTR !!"
 done
 
+#echo $WRITEDIR/${username}$i.txt
 OUTPUTSTRING=$(./finder.sh "$WRITEDIR" "$WRITESTR")
 
 # remove temporary directories
 rm -rf /tmp/aeld-data
 
 set +e
+echo "The outputstring says $OUTPUTSTRING"
 echo ${OUTPUTSTRING} | grep "${MATCHSTR}"
 if [ $? -eq 0 ]; then
 	echo "success"
